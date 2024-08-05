@@ -1,0 +1,74 @@
+@startuml
+hide empty members
+
+class Stocked_food {
+    id : uid
+    name : String
+    expire : String
+    source_id : String
+    price : int
+}
+
+class Organization {
+    account_id : Account
+    goods_id : uid[]
+    register_stocked_food(string expire, int num, string kind) : void
+    add_merchandise(Goods good) : void
+    get_stocked_info() : Goods 
+}
+
+class Goods {
+    id : uid
+    stocked_id : uid
+    num : int
+    name : string
+}
+
+class Seller  {
+    account : Account
+    goods_ids : uid[]
+    add_merchandise(Good good) : void
+}
+
+class Buyer {
+    account : Account
+    goods_ids : uid[]
+}
+
+class Account {
+    id : uid
+    email: String
+}
+
+class Rakuten_ichiba {
+    notify_api()
+    give_profit(Seller seller) : void
+    deliver_good(Good good) : void
+    recommend(Organization org) : void
+}
+
+
+Organization *-- Account
+Organization *-- Goods
+Organization --> Goods : request
+Organization --> Goods : register
+Organization --> Rakuten_ichiba : add
+
+Rakuten_ichiba --> Organization : recommend
+Rakuten_ichiba --> Organization : notification
+Rakuten_ichiba --> Seller : give profit
+Rakuten_ichiba --> Buyer : deliver goods
+
+Buyer --> Rakuten_ichiba : buy goods
+
+Buyer *-- Account
+Buyer *-- Goods
+
+Seller *-- Account
+Seller *-- Goods
+Seller --> Rakuten_ichiba : add
+
+
+Goods *-- Stocked_food
+
+@enduml
