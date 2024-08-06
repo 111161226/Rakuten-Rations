@@ -1,0 +1,29 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+    name String     @unique
+    num             Int
+    woman_ration    Int 
+}
+
+model Stored_pair {
+    name            String 
+    stored_id       String
+    @@unique([name, stored_id])
+}
+
+model Stored_food {
+    id           String @default(cuid()) @id
+    category     String
+    num          Int
+    expired_at   DateTime
+}
