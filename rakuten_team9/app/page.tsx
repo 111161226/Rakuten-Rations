@@ -1,57 +1,50 @@
 "use client";
-import { useState } from "react";
 
-const itemsData = [
-  {
-    id: 1,
-    name: "Item 1",
-    size: "Small",
-    expiration: "2024-12-31",
-    quantity: 5,
-  },
-  {
-    id: 2,
-    name: "Item 2",
-    size: "Large",
-    expiration: "2025-06-30",
-    quantity: 3,
-  },
-  // Add more items as needed
-];
+import {
+  Card,
+  CardBody,
+  Stack,
+  Heading,
+  Divider,
+  CardFooter,
+  ButtonGroup,
+  Button,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 
-export default function Home() {
-  const [items, setItems] = useState(itemsData);
-
-  const handleQuantityChange = (id: number, change: number) => {
-    const updatedItems = items.map((item) => {
-      if (item.id === id) {
-        return { ...item, quantity: item.quantity + change };
-      } else {
-        return item;
-      }
-    });
-    setItems(updatedItems);
-  };
-
+export default function Page() {
   return (
-    <div>
-      <h1>Item Management System</h1>
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-            <div>{item.name}</div>
-            <div>Size: {item.size}</div>
-            <div>Expiration: {item.expiration}</div>
-            <div>Quantity: {item.quantity}</div>
-            <button onClick={() => handleQuantityChange(item.id, 1)}>
-              Increase
-            </button>
-            <button onClick={() => handleQuantityChange(item.id, -1)}>
-              Decrease
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Card maxW="sm">
+      <CardBody>
+        <Image
+          src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+          alt="Green double couch with wooden legs"
+          borderRadius="lg"
+        />
+        <Stack mt="6" spacing="3">
+          <Heading size="md">Living room Sofa</Heading>
+          <Text>
+            This sofa is perfect for modern tropical spaces, baroque inspired
+            spaces, earthy toned spaces and for people who love a chic design
+            with a sprinkle of vintage design.
+          </Text>
+          <Text color="blue.600" fontSize="2xl">
+            $450
+          </Text>
+        </Stack>
+      </CardBody>
+      <Divider />
+      <CardFooter>
+        <ButtonGroup spacing="2">
+          <Button variant="solid" colorScheme="blue">
+            Buy now
+          </Button>
+          <Button variant="ghost" colorScheme="blue">
+            Add to cart
+          </Button>
+        </ButtonGroup>
+      </CardFooter>
+    </Card>
   );
 }
