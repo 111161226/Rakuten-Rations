@@ -1,0 +1,27 @@
+@startuml
+hide empty members
+
+entity Organization {
+    * name : String
+    num : int 
+    woman_ratio : int
+}
+
+entity Stored_pair {
+    # name : String
+    # id : String
+}
+
+entity Stored_food {
+    id : String
+    category : String
+    num : int
+    expired_at : DateTime
+    * (id, expired_at)
+}
+
+Organization --o{ Stored_pair : name is foreign key
+
+Stored_food --o{ Stored_pair : id is foreign key
+
+@enduml
