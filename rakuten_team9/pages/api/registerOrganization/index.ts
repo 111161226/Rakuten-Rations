@@ -1,6 +1,6 @@
 import prisma from '../../../lib/prisma';
 
-// POST /api/registerStock
+// POST /api/registerOrganization
 // Required fields in body: name
 // Required fields in body: num
 // Required fields in body: woman_ration
