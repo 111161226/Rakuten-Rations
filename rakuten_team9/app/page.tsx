@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 export default function Page() {
+  const a = 11;
   return (
     <Card maxW="sm">
       <CardBody>
@@ -37,7 +38,13 @@ export default function Page() {
       <Divider />
       <CardFooter>
         <ButtonGroup spacing="2">
-          <Button variant="solid" colorScheme="blue">
+          <Button
+            variant="solid"
+            colorScheme="blue"
+            onClick={() => {
+              alert(a);
+            }}
+          >
             Buy now
           </Button>
           <Button variant="ghost" colorScheme="blue">

@@ -1,10 +1,12 @@
 "use client";
-import { Link } from "@chakra-ui/next-js";
+import Item from "@/components/elements/rations/RationItem";
+import { Box } from "@chakra-ui/react";
 
-export default function Page() {
+export default function Home() {
   return (
-    <Link href="/about" color="blue.400" _hover={{ color: "blue.500" }}>
-      About
-    </Link>
+    <Box p="4">
+      <Item category="缶詰" expirationDate="2025-12-31" initialQuantity={10} />
+      <Item category="乾パン" expirationDate="2024-06-15" initialQuantity={5} />
+    </Box>
   );
 }
