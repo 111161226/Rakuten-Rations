@@ -15,15 +15,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         expired_at: {
           gt: oneYearFromNow,
         },
-        stored_pair: {
-          some: {
-            name: 'test2',
-          },
-        },
+        org_name: "test2"
       },
-      include: {
-        stored_pair: true, // 関連するStored_pairも含めて取得する場合
-      },y
     });
 
     // 取得したデータをレスポンスとして返す
