@@ -22,6 +22,6 @@ entity Stored_food {
 
 Organization --o{ Stored_pair : name is foreign key
 
-Stored_food --o{ Stored_pair : id is foreign key
+Stored_food -- Stored_pair : id is foreign key
 
 @enduml
