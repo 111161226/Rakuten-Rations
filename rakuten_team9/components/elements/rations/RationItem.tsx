@@ -1,6 +1,6 @@
 // components/Item.js
 import { useState } from "react";
-import { Box, Text, Input, Flex, Spacer, Button } from "@chakra-ui/react";
+import { Box, Text, Input, Flex, Spacer, Button, useDisclosure } from "@chakra-ui/react";
 
 type ItemProps = {
   category: string;
@@ -40,7 +40,3 @@ const Item = ({ category, expirationDate, initialQuantity }: ItemProps) => {
 };
 
 export default Item;
-
-function plusOne(itemQuantity: number) {
-  return 22;
-}
