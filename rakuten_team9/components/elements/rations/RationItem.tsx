@@ -1,18 +1,51 @@
-// components/Item.js
-import { useState } from "react";
-import { Box, Text, Input, Flex, Spacer, Button } from "@chakra-ui/react";
+// // components/Item.js
+// import { useState } from "react";
+// import { Box, Text, Input, Flex, Spacer, Button, useDisclosure } from "@chakra-ui/react";
+
+
+//   const Item = ({ category, expirationDate, quantity, handleQuantityChange, index }: any) => {
+//     const onQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//       handleQuantityChange(index, Number(e.target.value));
+//     };
+//   return (
+//     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="6" mb="4">
+//       <Flex>
+//         <Box>
+//           <Text fontSize="xl" fontWeight="bold">
+//             {category}
+//           </Text>
+//           <Text color="gray.500">賞味期限: {expirationDate}</Text>
+//         </Box>
+//         <Spacer />
+//         <Box textAlign="right">
+//           <Text fontSize="md">個数:</Text>
+//           <Input
+//             type="number"
+//             value={quantity}
+//             onChange={onQuantityChange}
+//             width="80px"
+//           />
+//         </Box>
+//       </Flex>
+//     </Box>
+//   );
+// };
+
+// export default Item;
+
+import { Box, Text, Input, Flex, Spacer } from "@chakra-ui/react";
 
 type ItemProps = {
   category: string;
   expirationDate: string;
-  initialQuantity: number;
+  quantity: number;
+  handleQuantityChange: (index: number, value: number) => void;
+  index: number;
 };
 
-const Item = ({ category, expirationDate, initialQuantity }: ItemProps) => {
-  const [quantity, setQuantity] = useState(initialQuantity);
-
-  const handleQuantityChange = (e: any) => {
-    setQuantity(e.target.value);
+const Item = ({ category, expirationDate, quantity, handleQuantityChange, index }: ItemProps) => {
+  const onQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleQuantityChange(index, Number(e.target.value));
   };
 
   return (
@@ -29,8 +62,8 @@ const Item = ({ category, expirationDate, initialQuantity }: ItemProps) => {
           <Text fontSize="md">個数:</Text>
           <Input
             type="number"
-            value={quantity}
-            onChange={handleQuantityChange}
+            value={quantity !== null ? quantity : ""}
+            onChange={onQuantityChange}
             width="80px"
           />
         </Box>
@@ -40,7 +73,3 @@ const Item = ({ category, expirationDate, initialQuantity }: ItemProps) => {
 };
 
 export default Item;
-
-function plusOne(itemQuantity: number) {
-  return 22;
-}
