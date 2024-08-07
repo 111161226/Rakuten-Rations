@@ -19,7 +19,7 @@ model Organization {
     name String     @unique
     num             Int
     woman_ratio     Int
-    stored_food     Stored_food[]
+    stored_foods     Stored_food[]
 }
 
 model Stored_food {
