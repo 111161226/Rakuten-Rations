@@ -19,15 +19,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // custom data strcuture
     const Customized = []
-    for (let i:number = 0; StoredFoods.length < 10; i++) {
+    let i = 0;
+    StoredFoods.forEach(food => {
         const custom = {
-            "category": StoredFoods[i].category,
-            "quantiry": StoredFoods[i].num,
+            "category": food.category,
+            "quantity": food.num,
             "index": i,
-            "expirationDate": StoredFoods[i].expired_at
+            "expirationDate": food.expired_at
         }
         Customized.push(custom)
-    }
+        i++;
+    });
 
     // 取得したデータをレスポンスとして返す
     res.status(200).json(Customized);
