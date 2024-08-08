@@ -3,7 +3,7 @@ import Item from "@/components/elements/rations/RationItem";
 import { useState } from "react";
 import { Box, Text, Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
 import Link from "next/link";
-import Header from "@/components/layouts/header";
+import Header from "@/components/layouts/Header";
 
 export default function Home() {
   const [employeeCount, setEmployeeCount] = useState("");
