@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             "category": food.category,
             "quantity": food.num,
             "index": i,
-            "expirationDate": food.expired_at
+            "expirationDate": food.expired_at.toString()
         }
         Customized.push(custom)
         i++;
