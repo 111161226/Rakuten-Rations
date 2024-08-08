@@ -39,7 +39,7 @@ const Header = () => {
           _hover={{ backgroundColor: "teal.600" }}
         />
         <Text fontSize="xl" fontWeight="bold">
-          楽天rations
+          楽天Rations
         </Text>
       </Flex>
 
@@ -47,7 +47,7 @@ const Header = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>楽天rations</DrawerHeader>
+          <DrawerHeader>楽天Rations</DrawerHeader>
           <DrawerBody>
             <Link href="/">
               <Button w="100%" mt={4}>
