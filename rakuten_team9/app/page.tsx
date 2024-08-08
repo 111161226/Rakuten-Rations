@@ -129,7 +129,7 @@ export default function Page() {
           borderWidth="1px"
           borderRadius="lg"
           overflow="hidden"
-          p={4}
+          p={1}
           alignItems="center"
           justifyContent="center"
           width="100%"
@@ -231,7 +231,6 @@ export default function Page() {
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               閉じる
             </Button>
-            <Button variant="ghost">キャンセル</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
