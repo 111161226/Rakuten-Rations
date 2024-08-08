@@ -39,14 +39,14 @@ const postData1: Stored_food[] =[
     id:'0003',
     category:'water',
     num:300,
-    expired_at: new Date(2024, 11, 2),
+    expired_at: new Date(2024, 12, 2),
     org_name: 'test1'
   }, 
    {
     id:'0004',
     category:'water',
     num:300,
-    expired_at: new Date(2024, 11, 2),
+    expired_at: new Date(2025, 1, 2),
     org_name: 'test2'
   },
   { 
@@ -67,7 +67,7 @@ const postData1: Stored_food[] =[
     id:'0007',
     category:'canning',
     num:250,
-    expired_at: new Date(2024, 9, 2),
+    expired_at: new Date(2024, 1, 2),
     org_name: 'test2'
   },
   { 
@@ -81,7 +81,7 @@ const postData1: Stored_food[] =[
     id:'0009',
     category:'bread',
     num:90,
-    expired_at: new Date(2024, 11, 2),
+    expired_at: new Date(2024, 12, 2),
     org_name: 'test2'
   },
   { 
@@ -89,6 +89,20 @@ const postData1: Stored_food[] =[
     category:'supplement',
     num:300,
     expired_at: new Date(2027, 3, 2),
+    org_name: 'test2'
+  },
+  { 
+    id:'0011',
+    category:'water',
+    num:300,
+    expired_at: new Date(2027, 3, 2),
+    org_name: 'test2'
+  },
+  { 
+    id:'0012',
+    category:'rice',
+    num:900,
+    expired_at: new Date(2026, 3, 2),
     org_name: 'test2'
   }
 ]
