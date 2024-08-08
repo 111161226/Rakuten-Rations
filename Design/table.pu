@@ -5,11 +5,7 @@ entity Organization {
     * name : String
     num : int 
     woman_ratio : int
-}
-
-entity Stored_pair {
-    # name : String
-    # id : String
+    stored_foods : Stored_food[]
 }
 
 entity Stored_food {
@@ -17,11 +13,11 @@ entity Stored_food {
     category : String
     num : int
     expired_at : DateTime
+    org? : Organization
+    # org_name : String
     * (id, expired_at)
 }
 
-Organization --o{ Stored_pair : name is foreign key
-
-Stored_food -- Stored_pair : id is foreign key
+Organization --o{ Stored_food : org_name is foreign key
 
 @enduml

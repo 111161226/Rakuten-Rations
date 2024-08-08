@@ -18,13 +18,8 @@ datasource db {
 model Organization {
     name String     @unique
     num             Int
-    woman_ration    Int 
-}
-
-model Stored_pair {
-    name            String 
-    stored_id       String
-    @@unique([name, stored_id])
+    woman_ratio     Int
+    stored_foods     Stored_food[]
 }
 
 model Stored_food {
@@ -32,4 +27,6 @@ model Stored_food {
     category     String
     num          Int
     expired_at   DateTime
+    org          Organization? @relation(fields: [org_name], references: [name])
+    org_name      String?
 }
