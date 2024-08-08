@@ -135,6 +135,25 @@ export default function Home() {
     }
   };
 
+  const getCategoryLabel = (category: string) => {
+    switch (category) {
+      case "water":
+        return "水";
+      case "canning":
+        return "缶詰";
+      case "retort":
+        return "レトルト食品";
+      case "rice":
+        return "パックご飯";
+      case "bread":
+        return "パン";
+      case "supplement":
+        return "栄養補助食品";
+      default:
+        return category; // デフォルトで英語表記を使用
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -249,8 +268,8 @@ export default function Home() {
               <UnorderedList>
                 {items.map((item, index) => (
                   <ListItem key={index}>
-                    {item.category}({item.quantity}) 賞味期限:{" "}
-                    {item.expirationDate}
+                    {getCategoryLabel(item.category)}({item.quantity}) 賞味期限:{" "}
+                    {new Date(item.expirationDate).toLocaleDateString()}
                   </ListItem>
                 ))}
               </UnorderedList>
