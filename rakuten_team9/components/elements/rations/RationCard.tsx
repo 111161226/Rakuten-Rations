@@ -3,7 +3,7 @@ import React from "react";
 import { Box, Image, Text, Flex, Progress } from "@chakra-ui/react";
 
 interface FoodStockCardProps {
-  category?: "water" | "rice" | "bread" | "can" | "retort" | "supplement";
+  category?: "water" | "rice" | "bread" | "canning" | "retort" | "supplement";
   quantity?: number;
   index?: number;
   expirationDate?: string;
@@ -42,7 +42,7 @@ export default function FoodStockCard({
     imageUrl = "categoryImages/pack_gohan_renji.png";
   } else if (category == "bread") {
     imageUrl = "categoryImages/pan_bread_set.png";
-  } else if (category == "can") {
+  } else if (category == "canning") {
     imageUrl = "categoryImages/food_kandume.png";
   } else if (category == "retort") {
     imageUrl = "categoryImages/retort_food.png";
