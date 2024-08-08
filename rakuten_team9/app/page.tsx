@@ -1,7 +1,7 @@
 "use client";
 import AdequacyCard from "@/components/elements/rations/AdequacyCard";
 import RationCard from "@/components/elements/rations/RationCard";
-import Header from "@/components/layouts/Header";
+import Head from "@/components/layouts/Head";
 import {
   Box,
   Button,
@@ -21,7 +21,7 @@ export default function Page() {
 
   return (
     <>
-      <Header />
+      <Head />
       <Box>
         <AdequacyCard />
         <Box display="flex" justifyContent="center" p={4}>
