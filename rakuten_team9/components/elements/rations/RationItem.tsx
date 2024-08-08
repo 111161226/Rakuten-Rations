@@ -2,8 +2,25 @@
 // import { useState } from "react";
 // import { Box, Text, Input, Flex, Spacer, Button, useDisclosure } from "@chakra-ui/react";
 
-import { Box, Text, Input, Flex, Spacer, Image, Button, useDisclosure} from "@chakra-ui/react";
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton} from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Input,
+  Flex,
+  Spacer,
+  Image,
+  Button,
+  useDisclosure,
+} from "@chakra-ui/react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 
 type ItemProps = {
   category: string;
@@ -14,7 +31,14 @@ type ItemProps = {
   index: number;
 };
 
-const Item = ({ category, expirationDate, quantity, handleQuantityChange, handleRemove, index }: ItemProps) => {
+const Item = ({
+  category,
+  expirationDate,
+  quantity,
+  handleQuantityChange,
+  handleRemove,
+  index,
+}: ItemProps) => {
   const onQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleQuantityChange(index, Number(e.target.value));
   };
@@ -54,11 +78,15 @@ const Item = ({ category, expirationDate, quantity, handleQuantityChange, handle
           <Text fontSize="xl" fontWeight="bold">
             {show_name}
           </Text>
-          <Text color="gray.500">賞味期限: {expirationDate}</Text>
+          <Text color="gray.500">
+            賞味期限: {new Date(expirationDate).toLocaleDateString()}
+          </Text>
         </Box>
         <Spacer />
         <Flex alignItems="center">
-          <Text fontSize="md" mr={2}>個数:</Text>
+          <Text fontSize="md" mr={2}>
+            個数:
+          </Text>
           <Input
             type="number"
             value={quantity !== null ? quantity : ""}
@@ -76,9 +104,7 @@ const Item = ({ category, expirationDate, quantity, handleQuantityChange, handle
         <ModalContent>
           <ModalHeader>確認</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            本当に削除しますか？
-          </ModalBody>
+          <ModalBody>本当に削除しますか？</ModalBody>
           <ModalFooter>
             <Button colorScheme="red" onClick={onRemoveClick}>
               削除
