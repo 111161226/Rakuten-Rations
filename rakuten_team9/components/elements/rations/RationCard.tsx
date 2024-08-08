@@ -89,9 +89,8 @@ export default function FoodStockCard({
       borderRadius="lg"
       overflow="hidden"
       p={4}
-      maxW="350px"
-      mx="auto"
-      mb={4}
+      mx={"5px"}
+      width="380px"
     >
       <Flex align="center" mb={4}>
         <Image src={imageUrl} alt="カテゴリ画像" boxSize="100px" mr={4} />

@@ -2,15 +2,22 @@
 import AdequacyCard from "@/components/elements/rations/AdequacyCard";
 import RationCard from "@/components/elements/rations/RationCard";
 import Header from "@/components/layouts/Header";
+import { Box, Grid } from "@chakra-ui/react";
 
 export default function Page() {
   return (
     <>
       <Header />
-      <AdequacyCard />
-      <RationCard />
-      <RationCard />
-      <RationCard />
+      <Box>
+        <AdequacyCard />
+        <Box display="flex" justifyContent="center" p={4}>
+          <Grid templateColumns="repeat(2, 1fr)" gap={4} maxW="800px">
+            <RationCard />
+            <RationCard />
+            <RationCard />
+          </Grid>
+        </Box>
+      </Box>
     </>
   );
 }
