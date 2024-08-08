@@ -17,8 +17,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     });
 
+    // custom data strcuture
+    const Customized = []
+    let i = 0;
+    StoredFoods.forEach(food => {
+        const custom = {
+            "category": food.category,
+            "quantity": food.num,
+            "index": i,
+            "expirationDate": food.expired_at.toString()
+        }
+        Customized.push(custom)
+        i++;
+    });
+
     // 取得したデータをレスポンスとして返す
-    res.status(200).json(StoredFoods);
+    res.status(200).json(Customized);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Something went wrong' });
