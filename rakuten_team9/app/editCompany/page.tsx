@@ -1,6 +1,6 @@
 "use client";
 import Item from "@/components/elements/rations/RationItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Text,
@@ -16,10 +16,38 @@ export default function Home() {
   const [employeeCount, setEmployeeCount] = useState("");
   const [femaleRatio, setFemaleRatio] = useState("");
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // 保存ロジックをここに追加
     console.log("社員数:", employeeCount, "女性比率:", femaleRatio);
+    const name = "test2"
+    const body = { name, employeeCount, femaleRatio};
+    await fetch('http://localhost:3000/api/updateOrganization', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body), 
+    });
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const organization = await fetch('http://localhost:3000/api/getOrganization');
+        if (!organization.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const org = await organization.json();
+        setEmployeeCount(org[0].num);
+        setFemaleRatio(org[0].woman_ratio);
+      } catch (error: any) {
+        console.log(error);
+      } finally {
+      }
+      console.log("社員数:", employeeCount, "女性比率:", femaleRatio);
+    };
+    fetchData();
+  }, []);
+
+  if (!employeeCount && !femaleRatio) return null;
 
   return (
     <>
