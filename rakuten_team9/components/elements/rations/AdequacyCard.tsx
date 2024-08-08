@@ -11,17 +11,7 @@ export default function AdequacyCard({
   details = ["パックご飯", "水", "レトルト食品"],
 }) {
   return (
-    <Flex
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      p={4}
-      alignItems="center"
-      justifyContent="center"
-      width="100%"
-      maxW="800px"
-      mx="auto"
-    >
+    <Flex>
       <Box flex="1" textAlign="left">
         <Text fontSize="xl" fontWeight="bold" mb={4}>
           備蓄食充実度

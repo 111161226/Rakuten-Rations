@@ -3,13 +3,7 @@ import React from "react";
 import { Box, Image, Text, Flex, Progress } from "@chakra-ui/react";
 
 interface FoodStockCardProps {
-  category?:
-    | "水"
-    | "パックご飯"
-    | "パン"
-    | "缶詰"
-    | "レトルト食品"
-    | "栄養補助食品";
+  category?: "water" | "rice" | "bread" | "can" | "retort" | "supplement";
   quantity?: number;
   index?: number;
   expirationDate?: string;
@@ -33,7 +27,7 @@ const getThreeYearsLater = (): string => {
 };
 
 export default function FoodStockCard({
-  category = "水",
+  category = "water",
   quantity = 50,
   expirationDate = getThreeYearsLater(),
 }: FoodStockCardProps): JSX.Element {
@@ -42,15 +36,15 @@ export default function FoodStockCard({
   const remainingDays = calculateRemainingTime(expirationDate);
   //   表示するカテゴリ画像の決定
   let imageUrl: string;
-  if (category == "水") {
+  if (category == "water") {
     imageUrl = "categoryImages/petbottle_water_full.png";
-  } else if (category == "パックご飯") {
+  } else if (category == "rice") {
     imageUrl = "categoryImages/pack_gohan_renji.png";
-  } else if (category == "パン") {
+  } else if (category == "bread") {
     imageUrl = "categoryImages/pan_bread_set.png";
-  } else if (category == "缶詰") {
+  } else if (category == "can") {
     imageUrl = "categoryImages/food_kandume.png";
-  } else if (category == "レトルト食品") {
+  } else if (category == "retort") {
     imageUrl = "categoryImages/retort_food.png";
   } else {
     imageUrl = "categoryImages/food_energy_bar.png";
