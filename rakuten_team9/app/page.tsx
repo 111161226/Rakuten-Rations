@@ -68,13 +68,13 @@ export default function Page() {
         const cardResult = await response1.json();
         setCards(cardResult);
 
-        // const response2 = await fetch("https://api.example.com/data");
-        // if (!response2.ok) {
-        //   throw new Error("Network response was not ok");
-        // }
-        // const adequacyResult = await response2.json();
-        // console.log(adequacyResult);
-        // setAdequacy(adequacyResult);
+         const response2 = await fetch("http://localhost:3000/api/test");
+         if (!response2.ok) {
+           throw new Error("Network response was not ok");
+         }
+         const adequacyResult = await response2.json();
+         console.log(adequacyResult);
+         setAdequacy(adequacyResult);
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -124,7 +124,7 @@ export default function Page() {
     <>
       <Header />
       <Box>
-        <Tabs
+        {/* <Tabs
           variant="enclosed"
           borderWidth="1px"
           borderRadius="lg"
@@ -136,8 +136,8 @@ export default function Page() {
           maxW="800px"
           mx="auto"
           mt={"30px"}
-        >
-          <TabList>
+        > */}
+        {/* /* <TabList>
             <Tab>3ヶ月後</Tab>
             <Tab>半年後</Tab>
             <Tab>1年後</Tab>
@@ -157,8 +157,8 @@ export default function Page() {
               <AdequacyCard adequacy={60} />
             </TabPanel>
           </TabPanels>
-        </Tabs>
-        {/* <Tabs
+        </Tabs>  */ }
+        { <Tabs
           variant="enclosed"
           borderWidth="1px"
           borderRadius="lg"
@@ -181,11 +181,11 @@ export default function Page() {
             {adequacy &&
               adequacy.map((item) => (
                 <TabPanel key={item.index}>
-                  <AdequacyCard adequacy={item.adequacy} />
+                  <AdequacyCard adequacy={item.adequacy} details={item.details} />
                 </TabPanel>
               ))}
           </TabPanels>
-        </Tabs> */}
+        </Tabs> }
         <Box display="flex" justifyContent="center" p={4}>
           <Grid templateColumns="repeat(2, 1fr)" gap={5} maxW="800px">
             {cards &&

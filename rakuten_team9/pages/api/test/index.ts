@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const today = new Date();
 
     // 各期間の計算結果を格納するためのオブジェクト
-    const results = {};
+    const results = [];
 
     // 期間ごとに日付を設定
     const periods = {
@@ -69,7 +69,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       crate = Math.min(crate, 1);
 
       // 備蓄充足率を計算
-      const fulfillmentRate = ((wrate + rrate + crate) / 3) * 100;
+      const fulfillmentRate = Math.round(((wrate + rrate + crate) / 3) * 100);
 
       // 不足している場合の備蓄量を計算
       const neededSupplies = [];
@@ -96,10 +96,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       // 結果をオブジェクトに格納
-      results[period] = {
-        fulfillmentRate,
-        neededSupplies,
-      };
+      const tmp = {
+        "adequacy" : fulfillmentRate,
+        "details" : neededSupplies
+      }
+      results.push(tmp);
     }
 
     // 結果をレスポンスとして返す
