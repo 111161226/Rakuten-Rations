@@ -8,18 +8,42 @@
 import Item from "@/components/elements/rations/RationItem";
 import { useState } from "react";
 import { Box, Button, Text, useDisclosure } from "@chakra-ui/react";
-import { Spacer, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Select, UnorderedList, ListItem } from "@chakra-ui/react";
-import Header from "@/components/layouts/Header";
+import {
+  Spacer,
+  Flex,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  UnorderedList,
+  ListItem,
+} from "@chakra-ui/react";
 import Link from "next/link";
+import Head from "@/components/layouts/Head";
 
 export default function Home() {
-  const { isOpen: isAddOpen, onOpen: onAddOpen, onClose: onAddClose } = useDisclosure();
-  const { isOpen: isConfirmOpen, onOpen: onConfirmOpen, onClose: onConfirmClose } = useDisclosure();
+  const {
+    isOpen: isAddOpen,
+    onOpen: onAddOpen,
+    onClose: onAddClose,
+  } = useDisclosure();
+  const {
+    isOpen: isConfirmOpen,
+    onOpen: onConfirmOpen,
+    onClose: onConfirmClose,
+  } = useDisclosure();
   const [items, setItems] = useState([
     { category: "缶詰", expirationDate: "2025-12-31", initialQuantity: 10 },
     { category: "パン", expirationDate: "2024-06-15", initialQuantity: 5 },
   ]);
-  
+
   const [newItem, setNewItem] = useState({
     category: "",
     expirationDate: "",
@@ -33,7 +57,9 @@ export default function Home() {
     setItems(updatedItems); //items更新
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setNewItem((prevItem) => ({
       ...prevItem,
@@ -91,111 +117,114 @@ export default function Home() {
 
   return (
     <>
-    <Header/>
-    <Box p="4">
-      {items.map((item, index) => (
-        <Item
-          key={index}
-          category={item.category}
-          expirationDate={item.expirationDate}
-          quantity={item.initialQuantity}
-          handleQuantityChange={handleQuantityChange}
-          handleRemove={handleRemove}
-          index={index}
-        />
-      ))}
+      <Head />
+      <Box p="4">
+        {items.map((item, index) => (
+          <Item
+            key={index}
+            category={item.category}
+            expirationDate={item.expirationDate}
+            quantity={item.initialQuantity}
+            handleQuantityChange={handleQuantityChange}
+            handleRemove={handleRemove}
+            index={index}
+          />
+        ))}
 
-      <Flex mb={4}>
-        <Button onClick={onAddOpen} mr={2}>備蓄食を追加</Button>
-        <Spacer />
-        <Button onClick={onConfirmOpen}>確定</Button>
-      </Flex>
-      <Flex justify="center" mt={4}>
-        <Link href="/">
-          <Button mt={4}>一覧へ</Button>
-        </Link>
-      </Flex>
+        <Flex mb={4}>
+          <Button onClick={onAddOpen} mr={2}>
+            備蓄食を追加
+          </Button>
+          <Spacer />
+          <Button onClick={onConfirmOpen}>確定</Button>
+        </Flex>
+        <Flex justify="center" mt={4}>
+          <Link href="/">
+            <Button mt={4}>一覧へ</Button>
+          </Link>
+        </Flex>
 
-      <Modal isOpen={isAddOpen} onClose={onAddClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>新しいデータ</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <FormControl id="category" mb={4}>
-              <FormLabel>カテゴリ</FormLabel>
-              <Select
-                name="category"
-                value={newItem.category}
-                onChange={handleInputChange}
-                placeholder="カテゴリを選ぶ"
-              >
-                <option value="水">水</option>
-                <option value="缶詰">缶詰</option>
-                <option value="レトルト食品">レトルト食品</option>
-                <option value="パックご飯">パックご飯</option>
-                <option value="パン">パン</option>
-                <option value="栄養補助食品">栄養補助食品</option>
-              </Select>
-            </FormControl>
-            <FormControl id="quantity" mb={4}>
-              <FormLabel>個数</FormLabel>
-              <Flex alignItems="center">
-                <Input
-                  type="number"
-                  name="initialQuantity"
-                  value={newItem.initialQuantity}
+        <Modal isOpen={isAddOpen} onClose={onAddClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>新しいデータ</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <FormControl id="category" mb={4}>
+                <FormLabel>カテゴリ</FormLabel>
+                <Select
+                  name="category"
+                  value={newItem.category}
                   onChange={handleInputChange}
-                  width="80px"
+                  placeholder="カテゴリを選ぶ"
+                >
+                  <option value="水">水</option>
+                  <option value="缶詰">缶詰</option>
+                  <option value="レトルト食品">レトルト食品</option>
+                  <option value="パックご飯">パックご飯</option>
+                  <option value="パン">パン</option>
+                  <option value="栄養補助食品">栄養補助食品</option>
+                </Select>
+              </FormControl>
+              <FormControl id="quantity" mb={4}>
+                <FormLabel>個数</FormLabel>
+                <Flex alignItems="center">
+                  <Input
+                    type="number"
+                    name="initialQuantity"
+                    value={newItem.initialQuantity}
+                    onChange={handleInputChange}
+                    width="80px"
+                  />
+                  <Text ml={2}>{getCategoryUnit(newItem.category)}</Text>
+                </Flex>
+              </FormControl>
+              <FormControl id="expirationDate" mb={4}>
+                <FormLabel>賞味期限</FormLabel>
+                <Input
+                  type="date"
+                  name="expirationDate"
+                  value={newItem.expirationDate}
+                  onChange={handleInputChange}
                 />
-                <Text ml={2}>{getCategoryUnit(newItem.category)}</Text>
-              </Flex>
-            </FormControl>
-            <FormControl id="expirationDate" mb={4}>
-              <FormLabel>賞味期限</FormLabel>
-              <Input
-                type="date"
-                name="expirationDate"
-                value={newItem.expirationDate}
-                onChange={handleInputChange}
-              />
-            </FormControl>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-              追加
-            </Button>
-            <Button onClick={handleAddClose}>キャンセル</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+              </FormControl>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                追加
+              </Button>
+              <Button onClick={handleAddClose}>キャンセル</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
 
-      <Modal isOpen={isConfirmOpen} onClose={onConfirmClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>確認</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text mb={4}>本当に確定しますか？</Text>
-            <UnorderedList>
-              {items.map((item, index) => (
-                <ListItem key={index}>
-                  {item.category}({item.initialQuantity}) 賞味期限: {item.expirationDate}
-                </ListItem>
-              ))}
-            </UnorderedList>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" onClick={handleConfirm}>
-              確定
-            </Button>
-            <Button onClick={onConfirmClose} ml={3}>
-              キャンセル
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </Box>
+        <Modal isOpen={isConfirmOpen} onClose={onConfirmClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>確認</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text mb={4}>本当に確定しますか？</Text>
+              <UnorderedList>
+                {items.map((item, index) => (
+                  <ListItem key={index}>
+                    {item.category}({item.initialQuantity}) 賞味期限:{" "}
+                    {item.expirationDate}
+                  </ListItem>
+                ))}
+              </UnorderedList>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" onClick={handleConfirm}>
+                確定
+              </Button>
+              <Button onClick={onConfirmClose} ml={3}>
+                キャンセル
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Box>
     </>
   );
 }

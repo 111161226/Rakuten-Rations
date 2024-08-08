@@ -10,7 +10,7 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import Header from "@/components/layouts/Header";
+import Head from "@/components/layouts/Head";
 
 export default function Home() {
   const [employeeCount, setEmployeeCount] = useState("");
@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      <Head />
       <Box p="6" textAlign="center">
         <Text fontSize="4xl" mb="8">
           会社情報
