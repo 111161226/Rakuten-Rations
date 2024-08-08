@@ -17,6 +17,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
         org_name: "test2"
       },
+      include: {
+        org: {
+          select: { num: true },
+        },
+      },
     });
 
     // 取得したデータをレスポンスとして返す
