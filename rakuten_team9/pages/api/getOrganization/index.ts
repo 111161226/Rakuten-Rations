@@ -8,32 +8,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const name  = "test2";
 
     // get stored food sorted by expired_at
-    const StoredFoods = await prisma.stored_food.findMany({
+    const StoredFoods = await prisma.organization.findMany({
       where: {
-        org_name: name
-      },
-      orderBy: {
-        expired_at: 'asc'
+        name: name
       }
     });
 
-    // custom data strcuture
-    const Customized = []
-    let i = 0;
-    StoredFoods.forEach(food => {
-        const custom = {
-            "id": food.id,
-            "category": food.category,
-            "quantity": food.num,
-            "index": i,
-            "expirationDate": food.expired_at.toString()
-        }
-        Customized.push(custom)
-        i++;
-    });
-
     // 取得したデータをレスポンスとして返す
-    res.status(200).json(Customized);
+    res.status(200).json(StoredFoods);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Something went wrong' });

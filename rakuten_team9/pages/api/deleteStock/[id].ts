@@ -1,9 +1,9 @@
 import prisma from '../../../lib/prisma';
 
-// DELETE /api/deleteStock
+// DELETE /api/deleteStock/{id}
 // Required fields in body: id
 export default async function handle(req, res) {
-    const id = req.body;
+    const id = req.query.id;
     if (req.method === 'DELETE') {
         const post = await prisma.stored_food.delete({
           where: { id: id },

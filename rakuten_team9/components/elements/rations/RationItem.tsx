@@ -25,18 +25,25 @@ const Item = ({ category, expirationDate, quantity, handleQuantityChange, handle
   };
 
   let imageUrl: string;
-  if (category == "水") {
+  let show_name: string;
+  if (category == "water") {
     imageUrl = "categoryImages/petbottle_water_full.png";
-  } else if (category == "パックご飯") {
+    show_name = "水";
+  } else if (category == "rice") {
     imageUrl = "categoryImages/pack_gohan_renji.png";
-  } else if (category == "パン") {
+    show_name = "パックご飯";
+  } else if (category == "bread") {
     imageUrl = "categoryImages/pan_bread_set.png";
-  } else if (category == "缶詰") {
+    show_name = "パン";
+  } else if (category == "canning") {
     imageUrl = "categoryImages/food_kandume.png";
-  } else if (category == "レトルト食品") {
+    show_name = "缶詰";
+  } else if (category == "retort") {
     imageUrl = "categoryImages/retort_food.png";
+    show_name = "レトルト食品";
   } else {
     imageUrl = "categoryImages/food_energy_bar.png";
+    show_name = "栄養補助食品";
   }
 
   return (
@@ -45,7 +52,7 @@ const Item = ({ category, expirationDate, quantity, handleQuantityChange, handle
         <Image src={imageUrl} alt="カテゴリ画像" boxSize="100px" mr={4} />
         <Box>
           <Text fontSize="xl" fontWeight="bold">
-            {category}
+            {show_name}
           </Text>
           <Text color="gray.500">賞味期限: {expirationDate}</Text>
         </Box>
