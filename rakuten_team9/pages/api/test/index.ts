@@ -75,24 +75,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const neededSupplies = [];
 
       if (wrate < 1) {
-        const neededWater = (1 - wrate) * num * 4.5;
+        const neededWater = Math.ceil((1 - wrate) * num * 4.5);
         neededSupplies.push(`${neededWater}本の水`);
+      } else {
+        neededSupplies.push('水の貯蓄は十分です');
       }
 
       if (rrate < 1) {
-        const neededRiceAndBread = (1 - rrate) * num * 9;
+        const neededRiceAndBread = Math.ceil((1 - rrate) * num * 9);
         neededSupplies.push(`${neededRiceAndBread}個の御飯パックかパン`);
+      } else {
+        neededSupplies.push('御飯パックかパンの貯蓄は十分です');
       }
 
       if (crate < 1) {
-        const neededCanningAndRetort = (1 - crate) * num * 9;
+        const neededCanningAndRetort = Math.ceil((1 - crate) * num * 9);
         neededSupplies.push(`${neededCanningAndRetort}個の缶詰かレトルト食品`);
+      } else {
+        neededSupplies.push('缶詰かレトルト食品の貯蓄は十分です');
       }
 
       // 結果をオブジェクトに格納
       results[period] = {
         fulfillmentRate,
-        neededSupplies: neededSupplies.length > 0 ? neededSupplies : ['備蓄は十分です。'],
+        neededSupplies,
       };
     }
 

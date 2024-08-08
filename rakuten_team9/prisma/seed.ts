@@ -46,7 +46,7 @@ const postData1: Stored_food[] =[
     id:'0004',
     category:'water',
     num:300,
-    expired_at: new Date(2024, 1, 2),
+    expired_at: new Date(2025, 1, 2),
     org_name: 'test2'
   },
   { 
