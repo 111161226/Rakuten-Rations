@@ -2,9 +2,23 @@
 import AdequacyCard from "@/components/elements/rations/AdequacyCard";
 import RationCard from "@/components/elements/rations/RationCard";
 import Header from "@/components/layouts/Header";
-import { Box, Grid } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Grid,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 
 export default function Page() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <Header />
@@ -12,12 +26,28 @@ export default function Page() {
         <AdequacyCard />
         <Box display="flex" justifyContent="center" p={4}>
           <Grid templateColumns="repeat(2, 1fr)" gap={4} maxW="800px">
-            <RationCard />
+            <button onClick={onOpen}>
+              <RationCard />
+            </button>
             <RationCard />
             <RationCard />
           </Grid>
         </Box>
       </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>モーダルのタイトル</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>モーダルのコンテンツがここに入ります。</ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              閉じる
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }
