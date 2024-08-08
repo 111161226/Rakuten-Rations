@@ -11,6 +11,7 @@ interface FoodStockCardProps {
     | "レトルト食品"
     | "栄養補助食品";
   quantity?: number;
+  index?: number;
   expirationDate?: string;
 }
 
