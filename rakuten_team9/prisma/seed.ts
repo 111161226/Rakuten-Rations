@@ -90,6 +90,20 @@ const postData1: Stored_food[] =[
     num:300,
     expired_at: new Date(2027, 3, 2),
     org_name: 'test2'
+  },
+  { 
+    id:'0011',
+    category:'water',
+    num:300,
+    expired_at: new Date(2027, 3, 2),
+    org_name: 'test2'
+  },
+  { 
+    id:'0012',
+    category:'rice',
+    num:900,
+    expired_at: new Date(2026, 3, 2),
+    org_name: 'test2'
   }
 ]
 
