@@ -38,7 +38,7 @@ const Header = () => {
           onClick={onOpen}
           _hover={{ backgroundColor: "teal.600" }}
         />
-        <Text fontSize="xl" fontWeight="bold">
+        <Text fontSize="3xl" fontWeight="bold">
           楽天Rations
         </Text>
       </Flex>

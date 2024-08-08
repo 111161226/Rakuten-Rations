@@ -1,11 +1,14 @@
 "use client";
+
+import { useEffect, useState } from "react";
 import AdequacyCard from "@/components/elements/rations/AdequacyCard";
 import RationCard from "@/components/elements/rations/RationCard";
-import Head from "@/components/layouts/Head";
+import Header from "@/components/layouts/Head";
 import {
   Box,
   Button,
   Grid,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,24 +16,187 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  VStack,
   useDisclosure,
+  Image,
+  Text,
 } from "@chakra-ui/react";
 
+interface FoodStockCardProps {
+  category?:
+    | "水"
+    | "パックご飯"
+    | "パン"
+    | "缶詰"
+    | "レトルト食品"
+    | "栄養補助食品";
+  quantity?: number;
+  index: number;
+  expirationDate?: string;
+}
+
+interface ApiData {
+  adequacy: number;
+  details: string[];
+  rationCards: FoodStockCardProps[];
+}
+
 export default function Page() {
+  const [recommendData, setRecommendData] = useState(null);
+  const [adequacy, setAdequacy] = useState<ApiData | null>(null);
+  const [cards, setCards] = useState<ApiData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response1 = await fetch("http://localhost:3000/api/gettest", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify("test2"),
+        });
+        if (!response1.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const cardResult = await response1.json();
+        setCards(cardResult);
+
+        // const response2 = await fetch("https://api.example.com/data");
+        // if (!response2.ok) {
+        //   throw new Error("Network response was not ok");
+        // }
+        // const adequacyResult = await response2.json();
+        // console.log(adequacyResult);
+        // setAdequacy(adequacyResult);
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const fetchRecommendData = async (index: number) => {
+    const category = cards[index].category;
+    let target: string;
+    if (category == "water") {
+      target = "水2L";
+    } else if (category == "rice") {
+      target = "パックご飯";
+    } else if (category == "bread") {
+      target = "保存パン";
+    } else if (category == "canning") {
+      target = "災害時用缶詰";
+    } else if (category == "retort") {
+      target = "レトルト食品";
+    } else {
+      target = "災害用栄養補助食品";
+    }
+    const RAKUTEN_API = "1081304271712371137";
+    const endpoint = `https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706?applicationId=${RAKUTEN_API}&keyword=${target}`;
+
+    try {
+      const response = await fetch(endpoint);
+      const result = await response.json();
+      const randomItem = result.Items[0];
+      setRecommendData([randomItem]);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    } finally {
+      onOpen();
+      setLoading(false);
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!cards && !adequacy) return null;
 
   return (
     <>
-      <Head />
+      <Header />
       <Box>
-        <AdequacyCard />
+        <Tabs
+          variant="enclosed"
+          borderWidth="1px"
+          borderRadius="lg"
+          overflow="hidden"
+          p={1}
+          alignItems="center"
+          justifyContent="center"
+          width="100%"
+          maxW="800px"
+          mx="auto"
+          mt={"30px"}
+        >
+          <TabList>
+            <Tab>3ヶ月後</Tab>
+            <Tab>半年後</Tab>
+            <Tab>1年後</Tab>
+            <Tab>2年後</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <AdequacyCard adequacy={20} />
+            </TabPanel>
+            <TabPanel>
+              <AdequacyCard adequacy={20} />
+            </TabPanel>
+            <TabPanel>
+              <AdequacyCard adequacy={40} />
+            </TabPanel>
+            <TabPanel>
+              <AdequacyCard adequacy={60} />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+        {/* <Tabs
+          variant="enclosed"
+          borderWidth="1px"
+          borderRadius="lg"
+          overflow="hidden"
+          p={4}
+          alignItems="center"
+          justifyContent="center"
+          width="100%"
+          maxW="800px"
+          mx="auto"
+          mt={"30px"}
+        >
+          <TabList>
+            <Tab>3ヶ月後</Tab>
+            <Tab>半年後</Tab>
+            <Tab>1年後</Tab>
+            <Tab>2年後</Tab>
+          </TabList>
+          <TabPanels>
+            {adequacy &&
+              adequacy.map((item) => (
+                <TabPanel key={item.index}>
+                  <AdequacyCard adequacy={item.adequacy} />
+                </TabPanel>
+              ))}
+          </TabPanels>
+        </Tabs> */}
         <Box display="flex" justifyContent="center" p={4}>
-          <Grid templateColumns="repeat(2, 1fr)" gap={4} maxW="800px">
-            <button onClick={onOpen}>
-              <RationCard />
-            </button>
-            <RationCard />
-            <RationCard />
+          <Grid templateColumns="repeat(2, 1fr)" gap={5} maxW="800px">
+            {cards &&
+              cards.map((card) => (
+                <button
+                  onClick={() => fetchRecommendData(card.index)}
+                  key={card.index}
+                >
+                  <RationCard {...card} />
+                </button>
+              ))}
           </Grid>
         </Box>
       </Box>
@@ -39,8 +205,28 @@ export default function Page() {
         <ModalContent>
           <ModalHeader>モーダルのタイトル</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>モーダルのコンテンツがここに入ります。</ModalBody>
-
+          <ModalBody>
+            {recommendData && (
+              <VStack spacing={4}>
+                {recommendData.map((item, index) => (
+                  <Box key={index} w="100%">
+                    <Image
+                      src={item.Item.mediumImageUrls[0].imageUrl}
+                      alt={item.Item.itemName}
+                      w="100%"
+                      mb={2}
+                    />
+                    <Text fontWeight="bold" textAlign="center">
+                      {item.Item.itemName}
+                    </Text>
+                    <Link href={item.Item.itemUrl} color="blue.500" isExternal>
+                      商品ページへ
+                    </Link>
+                  </Box>
+                ))}
+              </VStack>
+            )}
+          </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               閉じる
@@ -51,69 +237,3 @@ export default function Page() {
     </>
   );
 }
-
-// import { useEffect, useState } from "react";
-// import AdequacyCard from "@/components/elements/rations/AdequacyCard";
-// import RationCard from "@/components/elements/rations/RationCard";
-// import Header from "@/components/layouts/Header";
-
-// interface FoodStockCardProps {
-//   category?:
-//     | "水"
-//     | "パックご飯"
-//     | "パン"
-//     | "缶詰"
-//     | "レトルト食品"
-//     | "栄養補助食品";
-//   quantity?: number;
-//   index: number;
-//   expirationDate?: string;
-// }
-
-// interface ApiData {
-//   adequacy: number;
-//   details: string[];
-//   rationCards: FoodStockCardProps[];
-// }
-
-// export default function Page() {
-//   const [data, setData] = useState<ApiData | null>(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await fetch("https://api.example.com/data");
-//         if (!response.ok) {
-//           throw new Error("Network response was not ok");
-//         }
-//         const result: ApiData = await response.json();
-//         setData(result);
-//       } catch (error: any) {
-//         setError(error.message);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   if (loading) return <p>Loading...</p>;
-//   if (error) return <p>Error: {error}</p>;
-
-//   if (!data) return null; // データがまだない場合
-
-//   return (
-//     <>
-//       <Header />
-//       <AdequacyCard adequacy={data.adequacy} details={data.details} />
-//       <div className="grid grid-cols-2 gap-4 p-4">
-//         {data.rationCards.map((card, index) => (
-//           <RationCard key={index} {...card} />
-//         ))}
-//       </div>
-//     </>
-//   );
-// }
