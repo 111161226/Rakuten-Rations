@@ -5,7 +5,7 @@ import prisma from '../../../lib/prisma';
 // Required fields in body: name
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const name  = req.body;
+    const name  = "test2";
 
     // get stored food sorted by expired_at
     const StoredFoods = await prisma.stored_food.findMany({
@@ -22,6 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let i = 0;
     StoredFoods.forEach(food => {
         const custom = {
+            "id": food.id,
             "category": food.category,
             "quantity": food.num,
             "index": i,

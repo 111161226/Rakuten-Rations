@@ -6,7 +6,7 @@
 
 "use client";
 import Item from "@/components/elements/rations/RationItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Button, Text, useDisclosure } from "@chakra-ui/react";
 import {
   Spacer,
@@ -39,10 +39,7 @@ export default function Home() {
     onOpen: onConfirmOpen,
     onClose: onConfirmClose,
   } = useDisclosure();
-  const [items, setItems] = useState([
-    { category: "缶詰", expirationDate: "2025-12-31", initialQuantity: 10 },
-    { category: "パン", expirationDate: "2024-06-15", initialQuantity: 5 },
-  ]);
+  const [items, setItems] = useState([]);
 
   const [newItem, setNewItem] = useState({
     category: "",
@@ -50,11 +47,11 @@ export default function Home() {
     initialQuantity: 0,
   });
 
-  const handleQuantityChange = (index: number, value: number) => {
+  const handleQuantityChange = async (index: number, value: number) => {
     const updatedItems = items.map((item, i) =>
-      i === index ? { ...item, initialQuantity: value } : item
+      i === index ? { ...item, quantity: value } : item
     ); //変更したいindexと一致した場合にinitialQuantityを変更
-    setItems(updatedItems); //items更新
+    setItems(updatedItems);
   };
 
   const handleInputChange = (
@@ -67,7 +64,10 @@ export default function Home() {
     }));
   };
 
-  const handleRemove = (index: number) => {
+  const handleRemove = async (index: number) => {
+    await fetch(`/api/deleteStock/${items[index].id}`, {
+      method: 'DELETE'
+    });
     const updatedItems = items.filter((_, i) => i !== index); //indexと合わない要素だけを残す
     setItems(updatedItems);
   };
@@ -81,7 +81,17 @@ export default function Home() {
     onAddClose();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
+    const name = "test2";
+    const category = newItem.category;
+    const num = Number(newItem.initialQuantity);
+    const expired_at = newItem.expirationDate;
+    const body = {name, category, num, expired_at};
+    await fetch("http://localhost:3000/api/registerStock", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
     setItems((prevItems) => [...prevItems, newItem]);
     setNewItem({
       category: "",
@@ -91,29 +101,60 @@ export default function Home() {
     onAddClose();
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     console.log(items);
+    for (const item of items) {
+      const id = item.id;
+      const num = item.quantity;
+      const body = {id, num};
+      await fetch("http://localhost:3000/api/updateStock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    };
     onConfirmClose();
   };
 
   const getCategoryUnit = (category: string) => {
     switch (category) {
-      case "水":
+      case "water":
         return "本 (2L)";
-      case "缶詰":
+      case "canning":
         return "個 (4号缶)";
-      case "レトルト食品":
+      case "retort":
         return "食";
-      case "パックご飯":
+      case "rice":
         return "個 (200g)";
-      case "パン":
+      case "bread":
         return "個 (100g)";
-      case "栄養補助食品":
+      case "supplement":
         return "個";
       default:
         return "";
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/api/gettest');
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const items = await res.json();
+        setItems(items);
+      } catch (error: any) {
+        console.log(error);
+      } finally {
+      }
+      console.log(items);
+    };
+    fetchData();
+  }, [items.length]);
+
+  if (!items) return null;
+  console.log(items);
 
   return (
     <>
@@ -124,7 +165,7 @@ export default function Home() {
             key={index}
             category={item.category}
             expirationDate={item.expirationDate}
-            quantity={item.initialQuantity}
+            quantity={item.quantity}
             handleQuantityChange={handleQuantityChange}
             handleRemove={handleRemove}
             index={index}
@@ -158,12 +199,12 @@ export default function Home() {
                   onChange={handleInputChange}
                   placeholder="カテゴリを選ぶ"
                 >
-                  <option value="水">水</option>
-                  <option value="缶詰">缶詰</option>
-                  <option value="レトルト食品">レトルト食品</option>
-                  <option value="パックご飯">パックご飯</option>
-                  <option value="パン">パン</option>
-                  <option value="栄養補助食品">栄養補助食品</option>
+                  <option value="water">水</option>
+                  <option value="canning">缶詰</option>
+                  <option value="retort">レトルト食品</option>
+                  <option value="rice">パックご飯</option>
+                  <option value="bread">パン</option>
+                  <option value="supplement">栄養補助食品</option>
                 </Select>
               </FormControl>
               <FormControl id="quantity" mb={4}>
@@ -208,7 +249,7 @@ export default function Home() {
               <UnorderedList>
                 {items.map((item, index) => (
                   <ListItem key={index}>
-                    {item.category}({item.initialQuantity}) 賞味期限:{" "}
+                    {item.category}({item.quantity}) 賞味期限:{" "}
                     {item.expirationDate}
                   </ListItem>
                 ))}
