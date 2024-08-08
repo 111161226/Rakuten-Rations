@@ -62,17 +62,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let neededSupplies = '';
 
     if (wrate < 1) {
-      const neededWater = (1 - wrate) * 4.5;
-      neededSupplies += `${neededWater}リットルの水が必要です。`;
+      const neededWater = (1 - wrate) *num* 4.5;
+      neededSupplies += `${neededWater}本の水が必要です。`;
     }
 
     if (rrate < 1) {
-      const neededRiceAndBread = (1 - rrate) * 9;
+      const neededRiceAndBread = (1 - rrate) *num* 9;
       neededSupplies += `${neededRiceAndBread}個の御飯パックかパンが必要です。`;
     }
 
     if (crate < 1) {
-      const neededCanningAndRetort = (1 - crate) * 9;
+      const neededCanningAndRetort = (1 - crate) *num* 9;
       neededSupplies += `${neededCanningAndRetort}個の缶詰かレトルト食品が必要です。`;
     }
 
@@ -89,4 +89,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 }
 
-}
+
