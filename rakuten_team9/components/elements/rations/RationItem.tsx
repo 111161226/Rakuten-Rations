@@ -2,7 +2,8 @@
 // import { useState } from "react";
 // import { Box, Text, Input, Flex, Spacer, Button, useDisclosure } from "@chakra-ui/react";
 
-import { Box, Text, Input, Flex, Spacer, Image, Button} from "@chakra-ui/react";
+import { Box, Text, Input, Flex, Spacer, Image, Button, useDisclosure} from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton} from "@chakra-ui/react";
 
 type ItemProps = {
   category: string;
@@ -17,8 +18,10 @@ const Item = ({ category, expirationDate, quantity, handleQuantityChange, handle
   const onQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleQuantityChange(index, Number(e.target.value));
   };
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const onRemoveClick = () => {
     handleRemove(index);
+    onClose();
   };
 
   let imageUrl: string;
@@ -47,19 +50,38 @@ const Item = ({ category, expirationDate, quantity, handleQuantityChange, handle
           <Text color="gray.500">賞味期限: {expirationDate}</Text>
         </Box>
         <Spacer />
-        <Box textAlign="right" mr={4}>
-          <Text fontSize="md">個数:</Text>
+        <Flex alignItems="center">
+          <Text fontSize="md" mr={2}>個数:</Text>
           <Input
             type="number"
             value={quantity !== null ? quantity : ""}
             onChange={onQuantityChange}
             width="80px"
+            mr={2}
           />
-        </Box>
-        <Button colorScheme="red" onClick={onRemoveClick} mt={2}>
-          削除
-        </Button>
+          <Button colorScheme="red" onClick={onOpen}>
+            削除
+          </Button>
+        </Flex>
       </Flex>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>確認</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            本当に削除しますか？
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="red" onClick={onRemoveClick}>
+              削除
+            </Button>
+            <Button onClick={onClose} ml={3}>
+              キャンセル
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

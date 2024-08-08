@@ -7,11 +7,14 @@
 "use client";
 import Item from "@/components/elements/rations/RationItem";
 import { useState } from "react";
-import { Box, Button, useDisclosure } from "@chakra-ui/react";
-import { Spacer, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
+import { Box, Button, Text, useDisclosure } from "@chakra-ui/react";
+import { Spacer, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Select, UnorderedList, ListItem } from "@chakra-ui/react";
+import Header from "@/components/layouts/Header";
+import Link from "next/link";
 
 export default function Home() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isAddOpen, onOpen: onAddOpen, onClose: onAddClose } = useDisclosure();
+  const { isOpen: isConfirmOpen, onOpen: onConfirmOpen, onClose: onConfirmClose } = useDisclosure();
   const [items, setItems] = useState([
     { category: "缶詰", expirationDate: "2025-12-31", initialQuantity: 10 },
     { category: "パン", expirationDate: "2024-06-15", initialQuantity: 5 },
@@ -43,6 +46,15 @@ export default function Home() {
     setItems(updatedItems);
   };
 
+  const handleAddClose = () => {
+    setNewItem({
+      category: "",
+      expirationDate: "",
+      initialQuantity: 0,
+    });
+    onAddClose();
+  };
+
   const handleSubmit = () => {
     setItems((prevItems) => [...prevItems, newItem]);
     setNewItem({
@@ -50,14 +62,36 @@ export default function Home() {
       expirationDate: "",
       initialQuantity: 0,
     });
-    onClose();
+    onAddClose();
   };
 
   const handleConfirm = () => {
     console.log(items);
+    onConfirmClose();
+  };
+
+  const getCategoryUnit = (category: string) => {
+    switch (category) {
+      case "水":
+        return "本 (2L)";
+      case "缶詰":
+        return "個 (4号缶)";
+      case "レトルト食品":
+        return "食";
+      case "パックご飯":
+        return "個 (200g)";
+      case "パン":
+        return "個 (100g)";
+      case "栄養補助食品":
+        return "個";
+      default:
+        return "";
+    }
   };
 
   return (
+    <>
+    <Header/>
     <Box p="4">
       {items.map((item, index) => (
         <Item
@@ -72,12 +106,17 @@ export default function Home() {
       ))}
 
       <Flex mb={4}>
-        <Button onClick={onOpen} mr={2}>備蓄食を追加</Button>
+        <Button onClick={onAddOpen} mr={2}>備蓄食を追加</Button>
         <Spacer />
-        <Button onClick={handleConfirm}>確定</Button>
+        <Button onClick={onConfirmOpen}>確定</Button>
+      </Flex>
+      <Flex justify="center" mt={4}>
+        <Link href="/">
+          <Button mt={4}>一覧へ</Button>
+        </Link>
       </Flex>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isAddOpen} onClose={onAddClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>新しいデータ</ModalHeader>
@@ -101,13 +140,16 @@ export default function Home() {
             </FormControl>
             <FormControl id="quantity" mb={4}>
               <FormLabel>個数</FormLabel>
-              <Input
-                type="number"
-                name="initialQuantity"
-                value={newItem.initialQuantity}
-                onChange={handleInputChange}
-                width="80px"
-              />
+              <Flex alignItems="center">
+                <Input
+                  type="number"
+                  name="initialQuantity"
+                  value={newItem.initialQuantity}
+                  onChange={handleInputChange}
+                  width="80px"
+                />
+                <Text ml={2}>{getCategoryUnit(newItem.category)}</Text>
+              </Flex>
             </FormControl>
             <FormControl id="expirationDate" mb={4}>
               <FormLabel>賞味期限</FormLabel>
@@ -123,10 +165,37 @@ export default function Home() {
             <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
               追加
             </Button>
-            <Button onClick={onClose}>キャンセル</Button>
+            <Button onClick={handleAddClose}>キャンセル</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal isOpen={isConfirmOpen} onClose={onConfirmClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>確認</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text mb={4}>本当に確定しますか？</Text>
+            <UnorderedList>
+              {items.map((item, index) => (
+                <ListItem key={index}>
+                  {item.category}({item.initialQuantity}) 賞味期限: {item.expirationDate}
+                </ListItem>
+              ))}
+            </UnorderedList>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" onClick={handleConfirm}>
+              確定
+            </Button>
+            <Button onClick={onConfirmClose} ml={3}>
+              キャンセル
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
     </Box>
+    </>
   );
 }
