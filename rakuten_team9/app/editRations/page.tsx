@@ -49,7 +49,7 @@ export default function Home() {
 
   const handleQuantityChange = async (index: number, value: number) => {
     const updatedItems = items.map((item, i) =>
-      i === index ? { ...item, quantity: value } : item
+      i === index && item.quantity ? { ...item.quantity as {value} } : item
     ); //変更したいindexと一致した場合にinitialQuantityを変更
     setItems(updatedItems);
   };
