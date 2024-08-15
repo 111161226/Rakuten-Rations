@@ -88,12 +88,23 @@ export default function Home() {
     const num = Number(newItem.initialQuantity);
     const expired_at = newItem.expirationDate;
     const body = {name, category, num, expired_at};
-    await fetch("api/registerStock", {
+    const rst = await fetch("api/registerStock", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    // setItems((prevItems) => [...prevItems, newItem]);
+    if (!rst.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const res = await rst.json(); 
+    const result : ItemProps = {
+      category: category,
+      quantity: num,
+      expirationDate: expired_at,
+      index: items.length,
+      id: res.id
+    };
+    setItems((prevItems) => [...prevItems, result]);
     setNewItem({
       category: "",
       expirationDate: "",
@@ -156,7 +167,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('api/gettest');
+        const res = await fetch('api/gettest', {cache: 'no-store',});
         if (!res.ok) {
           throw new Error("Network response was not ok");
         }
