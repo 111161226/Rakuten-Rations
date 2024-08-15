@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma';
 
-export const runtime = 'edge';
-
 export const GET = async (req: NextRequest, res: NextResponse) => {
   try {
     // 今日の日付を取得
@@ -106,11 +104,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     }
 
     // 結果をレスポンスとして返す
-    return NextResponse.json(results, {status: 200, headers: {
-      'Cache-Control': 'no-store',
-      'CDN-Cache-Control': 'no-store',
-      'Vercel-CDN-Cache-Control': 'no-store'
-    }});
+    return NextResponse.json(results, {status: 200});
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Something went wrong' }, {status: 500});

@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma';
 
-export const runtime = 'edge';
-
 // GET /api/registerOrganization
 // Required fields in body: name
 export const GET = async (req: NextRequest, res: NextResponse) => {
@@ -35,11 +33,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     });
 
     // 取得したデータをレスポンスとして返す
-    return NextResponse.json(Customized, {status: 200, headers: {
-      'Cache-Control': 'no-store',
-      'CDN-Cache-Control': 'no-store',
-      'Vercel-CDN-Cache-Control': 'no-store'
-    }});
+    return NextResponse.json(Customized, {status: 200});
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Something went wrong' }, {status: 500});

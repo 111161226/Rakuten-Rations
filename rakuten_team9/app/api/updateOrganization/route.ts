@@ -1,8 +1,6 @@
 import prisma from '../../../lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'edge';
-
 // PUT /api/updateOrganization
 // Required fields in body: id
 // Required fields in body: num
@@ -19,11 +17,7 @@ export const PUT = async (req: NextRequest, res: NextResponse) => {
                 woman_ratio: Number(femaleRatio) 
             },
         });
-        return NextResponse.json(result, {status: 200, headers: {
-            'Cache-Control': 'no-store',
-            'CDN-Cache-Control': 'no-store',
-            'Vercel-CDN-Cache-Control': 'no-store'
-          }});
+        return NextResponse.json(result, {status: 200});
     } catch (error) {
         console.error(error);
         return NextResponse.json({ error: 'Something went wrong' }, {status: 500});
