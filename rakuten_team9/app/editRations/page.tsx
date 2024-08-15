@@ -88,7 +88,7 @@ export default function Home() {
     const num = Number(newItem.initialQuantity);
     const expired_at = newItem.expirationDate;
     const body = {name, category, num, expired_at};
-    await fetch("http://localhost:3000/api/registerStock", {
+    await fetch("api/registerStock", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -108,7 +108,7 @@ export default function Home() {
       const id = item.id;
       const num = item.quantity;
       const body = {id, num};
-      await fetch("http://localhost:3000/api/updateStock", {
+      await fetch("/api/updateStock", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

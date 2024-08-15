@@ -29,6 +29,7 @@ export type ItemProps = {
   handleQuantityChange: (index: number, value: number) => void;
   handleRemove: (index: number) => void;
   index: number;
+  id?: string;
 };
 
 const Item = ({
@@ -38,6 +39,7 @@ const Item = ({
   handleQuantityChange,
   handleRemove,
   index,
+  id
 }: ItemProps) => {
   const onQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleQuantityChange(index, Number(e.target.value));
