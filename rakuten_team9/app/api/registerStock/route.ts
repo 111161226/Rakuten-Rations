@@ -26,3 +26,4 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     }
 }
   
+export const fetchCache = 'force-no-store';

@@ -21,4 +21,5 @@ export const PUT = async (req: NextRequest) => {
         await prisma.$disconnect();
     }
 }
-  
+
+export const fetchCache = 'force-no-store';
