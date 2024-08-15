@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export const POST = async (req: NextRequest, res: NextResponse) => {
     try {
         const { name, category, num, expired_at } = await req.json();
-        const result = await prisma.stored_food.create({
+        const rst = await prisma.stored_food.create({
             data: {
                 category: category,
                 num: num,
@@ -17,6 +17,13 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
                 org: { connect: { name: name}}
             },
         });
+        const result = {
+            id: rst.id,
+            category: category,
+            quantity: num,
+            index: -1,
+            expirationDate: expired_at
+        }
         return NextResponse.json(result, {status: 200});
     } catch (error) {
         console.error(error);

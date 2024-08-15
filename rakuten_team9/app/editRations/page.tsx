@@ -97,14 +97,7 @@ export default function Home() {
       throw new Error("Network response was not ok");
     }
     const res = await rst.json(); 
-    const result : ItemProps = {
-      category: category,
-      quantity: num,
-      expirationDate: expired_at,
-      index: items.length,
-      id: res.id
-    };
-    setItems((prevItems) => [...prevItems, result]);
+    setItems((prevItems) => [...prevItems, res]);
     setNewItem({
       category: "",
       expirationDate: "",
