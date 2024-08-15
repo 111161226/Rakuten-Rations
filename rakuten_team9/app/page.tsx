@@ -85,7 +85,7 @@ export default function Page() {
   }, []);
 
   const fetchRecommendData = async (index: number) => {
-    const category = cards?([index]).category;
+    const category = cards?.[index]?.category ?? 'default-category';
     let target: string;
     if (category == "water") {
       target = "水2L";
