@@ -6,6 +6,7 @@
 
 "use client";
 import Item from "@/components/elements/rations/RationItem";
+import type { ItemProps } from "@/components/elements/rations/RationItem";
 import { useState, useEffect } from "react";
 import { Box, Button, Text, useDisclosure } from "@chakra-ui/react";
 import {
@@ -39,7 +40,7 @@ export default function Home() {
     onOpen: onConfirmOpen,
     onClose: onConfirmClose,
   } = useDisclosure();
-  const [items, setItems] = useState<typeof Item[]>([]);
+  const [items, setItems] = useState<ItemProps[]>([]);
 
   const [newItem, setNewItem] = useState({
     category: "",
@@ -49,7 +50,7 @@ export default function Home() {
 
   const handleQuantityChange = async (index: number, value: number) => {
     const updatedItems = items.map((item, i) =>
-      i === index ? { ...(item as object), quantity: value }: item
+      i === index ? { ...item, quantity: value }: item
     ); //変更したいindexと一致した場合にinitialQuantityを変更
     setItems(updatedItems);
   };

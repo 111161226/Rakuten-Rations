@@ -22,7 +22,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 
-type ItemProps = {
+export type ItemProps = {
   category: string;
   expirationDate: string;
   quantity: number;
