@@ -93,7 +93,7 @@ export default function Home() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    setItems((prevItems) => [...prevItems, newItem]);
+    // setItems((prevItems) => [...prevItems, newItem]);
     setNewItem({
       category: "",
       expirationDate: "",
