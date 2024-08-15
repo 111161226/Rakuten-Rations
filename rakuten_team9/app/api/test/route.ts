@@ -104,7 +104,11 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     }
 
     // 結果をレスポンスとして返す
-    return NextResponse.json(results, {status: 200});
+    return NextResponse.json(results, {status: 200, headers: {
+      'Cache-Control': 'no-store',
+      'CDN-Cache-Control': 'no-store',
+      'Vercel-CDN-Cache-Control': 'no-store'
+    }});
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Something went wrong' }, {status: 500});
@@ -112,5 +116,3 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     await prisma.$disconnect();
   }
 }
-
-export const fetchCache = 'force-no-store';

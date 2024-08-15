@@ -13,7 +13,11 @@ export const PUT = async (req: NextRequest) => {
             where: { id: String(id) },
             data: { num: Number(num) },
         });
-        return NextResponse.json(result, {status: 200});
+        return NextResponse.json(result, {status: 200, headers: {
+            'Cache-Control': 'no-store',
+            'CDN-Cache-Control': 'no-store',
+            'Vercel-CDN-Cache-Control': 'no-store'
+          }});
     } catch (error) {
         console.error(error);
         return NextResponse.json({ error: 'Something went wrong' }, {status: 500});
@@ -21,5 +25,3 @@ export const PUT = async (req: NextRequest) => {
         await prisma.$disconnect();
     }
 }
-
-export const fetchCache = 'force-no-store';

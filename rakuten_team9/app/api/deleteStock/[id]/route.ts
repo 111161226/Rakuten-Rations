@@ -10,7 +10,11 @@ export const DELETE = async (req: NextRequest, {params}: {params: {id: string}},
         const post = await prisma.stored_food.delete({
           where: { id: id },
         });
-        return NextResponse.json(post, {status: 200});
+        return NextResponse.json(post, {status: 200, headers: {
+            'Cache-Control': 'no-store',
+            'CDN-Cache-Control': 'no-store',
+            'Vercel-CDN-Cache-Control': 'no-store'
+        }});
       } catch (error) {
         console.error(error);
         return NextResponse.json({ error: 'Something went wrong' }, {status: 500});
@@ -26,5 +30,3 @@ export const DELETE = async (req: NextRequest, {params}: {params: {id: string}},
     */
     return NextResponse.json(`The HTTP ${req.method} method is not supported at this route.`, {status: 404});
 }
-
-export const fetchCache = 'force-no-store';
