@@ -27,6 +27,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 
+export const dynamic = 'force-static'
+
 interface FoodStockCardProps {
   category?:
     | "water"

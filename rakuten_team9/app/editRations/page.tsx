@@ -29,6 +29,8 @@ import {
 import Link from "next/link";
 import Head from "@/components/layouts/Head";
 
+export const dynamic = 'force-static'
+
 export default function Home() {
   const {
     isOpen: isAddOpen,
