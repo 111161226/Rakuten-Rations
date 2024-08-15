@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma';
 
 // GET /api/registerOrganization
 // Required fields in body: name
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextRequest, res: NextResponse) {
   try {
     const name  = "test2";
 
@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     // custom data strcuture
-    const Customized = []
+    const Customized : any[] = []
     let i = 0;
     StoredFoods.forEach(food => {
         const custom = {
@@ -33,10 +33,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     // 取得したデータをレスポンスとして返す
-    res.status(200).json(Customized);
+    return NextResponse.json(Customized, {status: 200});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Something went wrong' });
+    return NextResponse.json({ error: 'Something went wrong' }, {status: 500});
   } finally {
     await prisma.$disconnect();
   }

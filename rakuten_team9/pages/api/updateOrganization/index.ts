@@ -1,18 +1,27 @@
 import prisma from '../../../lib/prisma';
+import { NextRequest, NextResponse } from 'next/server';
 
 // POST /api/updateOrganization
 // Required fields in body: id
 // Required fields in body: num
-export default async function handle(req, res) {
-    console.log(req.body);
-    const { name, employeeCount, femaleRatio } = req.body;
-    console.log(employeeCount);
-    const result = await prisma.organization.update({
-        where: { name: name },
-        data: { 
-            num: employeeCount,
-            woman_ratio: Number(femaleRatio) 
-        },
-    });
-    return res.json(result);
+export default async function handle(req: NextRequest, res: NextResponse) {
+    try{
+        const params = req.nextUrl.searchParams
+        const name = params.get("name")
+        const employeeCount = params.get("employeeCount")
+        const femaleRatio = params.get("femaleRatio")
+        const result = await prisma.organization.update({
+            where: { name: String(name) },
+            data: { 
+                num: Number(employeeCount),
+                woman_ratio: Number(femaleRatio) 
+            },
+        });
+        return NextResponse.json(result, {status: 200});
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ error: 'Something went wrong' }, {status: 500});
+      } finally {
+        await prisma.$disconnect();
+    }
 }

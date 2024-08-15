@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextRequest, res: NextResponse) {
   try {
     // 今日の日付を取得
     const today = new Date();
@@ -104,10 +104,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // 結果をレスポンスとして返す
-    res.status(200).json(results);
+    return NextResponse.json(results, {status: 200});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Something went wrong' });
+    return NextResponse.json({ error: 'Something went wrong' }, {status: 500});
   } finally {
     await prisma.$disconnect();
   }

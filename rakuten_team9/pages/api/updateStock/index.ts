@@ -1,14 +1,24 @@
 import prisma from '../../../lib/prisma';
+import { NextRequest, NextResponse } from 'next/server';
 
 // PUT /api/updateStock
 // Required fields in body: id
 // Required fields in body: num
-export default async function handle(req, res) {
-    const { id, num } = req.body;
-    const result = await prisma.stored_food.update({
-        where: { id: id },
-        data: { num: num },
-    });
-    res.json(result);
+export default async function handle(req: NextRequest) {
+    try{
+        const params = req.nextUrl.searchParams;
+        const id = params.get("id");
+        const num = params.get("num")
+        const result = await prisma.stored_food.update({
+            where: { id: String(id) },
+            data: { num: Number(num) },
+        });
+        return NextResponse.json(result, {status: 200});
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ error: 'Something went wrong' }, {status: 500});
+      } finally {
+        await prisma.$disconnect();
+    }
 }
   
