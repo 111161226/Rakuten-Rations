@@ -47,7 +47,7 @@ interface ApiData {
 }
 
 export default function Page() {
-  const [recommendData, setRecommendData] = useState();
+  const [recommendData, setRecommendData] = useState<any[]>([]);
   const [adequacy, setAdequacy] = useState<ApiData[]>([]);
   const [cards, setCards] = useState<FoodStockCardProps[]>([]);
   const [loading, setLoading] = useState(true);

@@ -158,7 +158,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('http://localhost:3000/api/gettest');
+        const res = await fetch('api/gettest');
         if (!res.ok) {
           throw new Error("Network response was not ok");
         }
