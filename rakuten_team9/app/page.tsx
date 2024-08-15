@@ -29,6 +29,7 @@ import {
 
 export const dynamic = 'force-static'
 export const fetchCache = 'force-no-store';
+const { signal } = new AbortController()
 
 interface FoodStockCardProps {
   category?:
@@ -60,14 +61,14 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response1 = await fetch("api/gettest");
+        const response1 = await fetch("api/gettest", {signal});
         if (!response1.ok) {
           throw new Error("Network response was not ok");
         }
         const cardResult = await response1.json();
         setCards(cardResult);
 
-         const response2 = await fetch("api/test");
+         const response2 = await fetch("api/test", {signal});
          if (!response2.ok) {
            throw new Error("Network response was not ok");
          }

@@ -32,6 +32,8 @@ import Head from "@/components/layouts/Head";
 export const dynamic = 'force-static'
 export const fetchCache = 'force-no-store';
 
+const { signal } = new AbortController()
+
 export default function Home() {
   const {
     isOpen: isAddOpen,
@@ -163,7 +165,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('api/gettest');
+        const res = await fetch('api/gettest', {signal});
         if (!res.ok) {
           throw new Error("Network response was not ok");
         }

@@ -14,6 +14,7 @@ import Head from "@/components/layouts/Head";
 
 export const dynamic = 'force-static'
 export const fetchCache = 'force-no-store';
+const { signal } = new AbortController()
 
 export default function Home() {
   const [employeeCount, setEmployeeCount] = useState("");
@@ -32,7 +33,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const organization = await fetch('api/getOrganization');
+        const organization = await fetch('api/getOrganization', {signal});
         if (!organization.ok) {
           throw new Error("Network response was not ok");
         }
