@@ -11,18 +11,11 @@ $ cd rakuten_team9
 $ make dev
 ```
 
-Initialize database in directory `rakuten_team9`
-
-```
-$ make mig
-$ make init
-```
-
-Build next app by the command below and access `localhost3000`
+Build next app and initialize database by the command below and access `localhost3000`
 
 ```
 $ cd rakuten_team9
-$ make app
+$ npm run dev
 ```
 
 You can configure the db by the command below
