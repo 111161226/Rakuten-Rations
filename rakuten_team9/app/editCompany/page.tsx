@@ -13,6 +13,7 @@ import Link from "next/link";
 import Head from "@/components/layouts/Head";
 
 export const dynamic = 'force-static'
+export const fetchCache = 'force-no-store';
 
 export default function Home() {
   const [employeeCount, setEmployeeCount] = useState("");
@@ -31,7 +32,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const organization = await fetch('api/getOrganization', {cache: 'no-store'});
+        const organization = await fetch('api/getOrganization');
         if (!organization.ok) {
           throw new Error("Network response was not ok");
         }

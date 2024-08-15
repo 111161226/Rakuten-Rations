@@ -28,6 +28,7 @@ import {
 } from "@chakra-ui/react";
 
 export const dynamic = 'force-static'
+export const fetchCache = 'force-no-store';
 
 interface FoodStockCardProps {
   category?:
@@ -59,14 +60,14 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response1 = await fetch("api/gettest", {cache: 'no-store',});
+        const response1 = await fetch("api/gettest");
         if (!response1.ok) {
           throw new Error("Network response was not ok");
         }
         const cardResult = await response1.json();
         setCards(cardResult);
 
-         const response2 = await fetch("api/test", {cache: 'no-store',});
+         const response2 = await fetch("api/test");
          if (!response2.ok) {
            throw new Error("Network response was not ok");
          }

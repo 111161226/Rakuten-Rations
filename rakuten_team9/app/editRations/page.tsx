@@ -30,6 +30,7 @@ import Link from "next/link";
 import Head from "@/components/layouts/Head";
 
 export const dynamic = 'force-static'
+export const fetchCache = 'force-no-store';
 
 export default function Home() {
   const {
@@ -162,7 +163,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('api/gettest', {cache: 'no-store',});
+        const res = await fetch('api/gettest');
         if (!res.ok) {
           throw new Error("Network response was not ok");
         }

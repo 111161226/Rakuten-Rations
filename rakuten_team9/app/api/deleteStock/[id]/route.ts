@@ -26,5 +26,3 @@ export const DELETE = async (req: NextRequest, {params}: {params: {id: string}},
     */
     return NextResponse.json(`The HTTP ${req.method} method is not supported at this route.`, {status: 404});
 }
-
-export const fetchCache = 'force-no-store';
