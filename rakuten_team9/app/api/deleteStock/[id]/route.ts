@@ -1,6 +1,8 @@
 import prisma from '../../../../lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const runtime = 'edge';
+
 // DELETE /api/deleteStock/{id}
 // Required fields in body: id
 export const DELETE = async (req: NextRequest, {params}: {params: {id: string}}, res: NextResponse) => {

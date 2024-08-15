@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma';
 
+export const runtime = 'edge';
+
 // GET /api/registerOrganization
 // Required fields in body: name
 export const GET = async (req: NextRequest, res: NextResponse) => {

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma';
 
+export const runtime = 'edge';
+
 export const GET = async (req: NextRequest, res: NextResponse) => {
   try {
     // 今日の日付を取得
