@@ -57,7 +57,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response1 = await fetch("http://localhost:3000/api/gettest", {
+        const response1 = await fetch("api/gettest", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify("test2"),
@@ -68,7 +68,7 @@ export default function Page() {
         const cardResult = await response1.json();
         setCards(cardResult);
 
-         const response2 = await fetch("http://localhost:3000/api/test");
+         const response2 = await fetch("api/test");
          if (!response2.ok) {
            throw new Error("Network response was not ok");
          }
@@ -85,7 +85,7 @@ export default function Page() {
   }, []);
 
   const fetchRecommendData = async (index: number) => {
-    const category = cards[index].category;
+    const category = cards[index]?.category;
     let target: string;
     if (category == "water") {
       target = "水2L";
