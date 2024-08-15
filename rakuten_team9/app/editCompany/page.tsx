@@ -33,7 +33,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const organization = await fetch('api/getOrganization', {signal});
+        const organization = await fetch('api/getOrganization', {signal, cache: "no-store"});
         if (!organization.ok) {
           throw new Error("Network response was not ok");
         }
