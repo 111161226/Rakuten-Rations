@@ -39,7 +39,7 @@ export default function Home() {
     onOpen: onConfirmOpen,
     onClose: onConfirmClose,
   } = useDisclosure();
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<Item[]>([]);
 
   const [newItem, setNewItem] = useState({
     category: "",
