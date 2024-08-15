@@ -57,11 +57,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response1 = await fetch("api/gettest", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify("test2"),
-        });
+        const response1 = await fetch("api/gettest");
         if (!response1.ok) {
           throw new Error("Network response was not ok");
         }

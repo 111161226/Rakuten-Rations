@@ -107,11 +107,9 @@ export default function Home() {
     for (const item of items) {
       const id = item.id;
       const num = item.quantity;
-      const body = {id, num};
-      await fetch("/api/updateStock", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+      await fetch(`/api/updateStock?id=${id}&num=${num}`, {
+        method: "PUT",
+        //headers: { "Content-Type": "application/json" },
       });
     };
     onConfirmClose();

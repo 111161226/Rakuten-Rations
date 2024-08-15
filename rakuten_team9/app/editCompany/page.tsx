@@ -21,17 +21,15 @@ export default function Home() {
     console.log("社員数:", employeeCount, "女性比率:", femaleRatio);
     const name = "test2"
     const body = { name, employeeCount, femaleRatio};
-    await fetch('http://localhost:3000/api/updateOrganization', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body), 
+    await fetch(`api/updateOrganization?name=${name}&employeeCount=${employeeCount}&femaleRatio=${femaleRatio}`, {
+      method: 'PUT'
     });
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const organization = await fetch('http://localhost:3000/api/getOrganization');
+        const organization = await fetch('api/getOrganization');
         if (!organization.ok) {
           throw new Error("Network response was not ok");
         }
