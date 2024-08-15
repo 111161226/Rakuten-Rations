@@ -29,12 +29,12 @@ import {
 
 interface FoodStockCardProps {
   category?:
-    | "水"
-    | "パックご飯"
-    | "パン"
-    | "缶詰"
-    | "レトルト食品"
-    | "栄養補助食品";
+    | "water"
+    | "rice"
+    | "bread"
+    | "canning"
+    | "retort"
+    | "supplement";
   quantity?: number;
   index: number;
   expirationDate?: string;
@@ -47,9 +47,9 @@ interface ApiData {
 }
 
 export default function Page() {
-  const [recommendData, setRecommendData] = useState(null);
-  const [adequacy, setAdequacy] = useState<ApiData | null>(null);
-  const [cards, setCards] = useState<ApiData | null>(null);
+  const [recommendData, setRecommendData] = useState();
+  const [adequacy, setAdequacy] = useState<ApiData[]>([]);
+  const [cards, setCards] = useState<FoodStockCardProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -85,7 +85,7 @@ export default function Page() {
   }, []);
 
   const fetchRecommendData = async (index: number) => {
-    const category = cards?.[index]?.category ?? 'default-category';
+    const category = cards[index].category;
     let target: string;
     if (category == "water") {
       target = "水2L";
@@ -179,8 +179,8 @@ export default function Page() {
           </TabList>
           <TabPanels>
             {adequacy &&
-              adequacy.map((item) => (
-                <TabPanel key={item.index}>
+              adequacy.map((item, index) => (
+                <TabPanel key={index}>
                   <AdequacyCard adequacy={item.adequacy} details={item.details} />
                 </TabPanel>
               ))}
