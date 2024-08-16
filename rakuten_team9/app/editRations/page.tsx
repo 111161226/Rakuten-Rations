@@ -115,6 +115,7 @@ export default function Home() {
 
   const handleConfirm = async () => {
     console.log(items);
+    onConfirmClose();
     for (const item of items) {
       const id = item.id;
       const num = item.quantity;
@@ -123,7 +124,6 @@ export default function Home() {
         //headers: { "Content-Type": "application/json" },
       });
     };
-    onConfirmClose();
   };
 
   const getCategoryUnit = (category: string) => {
