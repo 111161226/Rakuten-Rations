@@ -48,7 +48,7 @@ export default function Home() {
       console.log("社員数:", employeeCount, "女性比率:", femaleRatio);
     };
     fetchData();
-  }, []);
+  });
 
   if (!employeeCount && !femaleRatio) return null;
 

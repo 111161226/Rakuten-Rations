@@ -180,7 +180,7 @@ export default function Home() {
       console.log(items);
     };
     fetchData();
-  }, [items.length]);
+  }, [items]);
 
   if (!items) return null;
   console.log(items);
