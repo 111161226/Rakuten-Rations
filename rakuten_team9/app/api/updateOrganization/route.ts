@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // PUT /api/updateOrganization
 // Required fields in body: id
 // Required fields in body: num
-export const PUT = async (req: NextRequest, res: NextResponse) => {
+export const PUT = async (req: NextRequest) => {
     try{
         const params = req.nextUrl.searchParams
         const name = params.get("name")

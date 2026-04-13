@@ -4,7 +4,7 @@ import prisma from '../../../lib/prisma';
 
 // GET /api/registerOrganization
 // Required fields in body: name
-export const GET = async (req: NextRequest, res: NextResponse) => {
+export const GET = async (req: NextRequest) => {
   try {
     const name  = "test2";
 
@@ -24,5 +24,3 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     await prisma.$disconnect();
   }
 }
-
-export const revalidate = 0;

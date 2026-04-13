@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // Required fields in body: category
 // Required fields in body: num
 // Required fields in body: expired_at
-export const POST = async (req: NextRequest, res: NextResponse) => {
+export const POST = async (req: NextRequest) => {
     try {
         const { name, category, num, expired_at } = await req.json();
         const rst = await prisma.stored_food.create({

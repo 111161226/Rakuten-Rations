@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // Required fields in body: name
 // Required fields in body: num
 // Required fields in body: woman_ration
-export const POST = async (req: NextRequest, res: NextResponse) => {
+export const POST = async (req: NextRequest) => {
     try {
         const { name, num, woman_ratio } = await req.json();
         const result = await prisma.organization.create({

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma';
 
-export const GET = async (req: NextRequest, res: NextResponse) => {
+export const GET = async (req: NextRequest) => {
   try {
     // 今日の日付を取得
     const today = new Date();
@@ -112,5 +112,3 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     await prisma.$disconnect();
   }
 }
-
-export const revalidate = 0;
