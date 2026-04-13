@@ -44,5 +44,11 @@
     "tsx": "^4.21.0",
     "typescript": "^5"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp",
+      "unrs-resolver"
+    ]
+  },
   "packageManager": "pnpm@10.33.0"
 }
