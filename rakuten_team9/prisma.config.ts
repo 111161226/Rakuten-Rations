@@ -1,11 +1,14 @@
-// prisma.config.ts
-import "dotenv/config"; // これで環境変数を自動ロード
-import { defineConfig, env } from "prisma/config";
+import "dotenv/config";
+import { defineConfig } from "prisma/config";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
-    // seedコマンドはここに移ります
-    seed: "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
+    // ts-node よりも、最近の環境では npx tsx が推奨されています
+    seed: "npx tsx prisma/seed.ts",
+  },
+  datasource: {
+    // env() ヘルパーではなく process.env を直接参照する
+    url: process.env.POSTGRES_PRISMA_URL || "", 
   },
 });
